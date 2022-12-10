@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS Books(
     author VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS User(
+CREATE TABLE IF NOT EXISTS Users(
     fullname VARCHAR(50) NOT NULL,
     userAddress VARCHAR(30),
     username VARCHAR(50) NOT NULL,
@@ -15,16 +15,7 @@ CREATE TABLE IF NOT EXISTS User(
     accountType CHAR(1) 
 );
 
-CREATE TABLE IF NOT EXISTS Bookstore(
-    inventory text[][] NOT NULL,
-    ISBN INT NOT NULL,
-    genres text[] NOT NULL,
-    categories text[] NOT NULL, 
-    authors text[] NOT NULL PRIMARY KEY,
-    orders text[] NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS Order(
+CREATE TABLE IF NOT EXISTS Orders(
     id INT NOT NULL PRIMARY KEY,
     books text[] NOT NULL
 );
