@@ -8,6 +8,6 @@ public class Bookstore{
 	String[] authors;
 	int[] orders;
 
-	public
+	
 }
 
