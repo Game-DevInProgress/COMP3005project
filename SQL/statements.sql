@@ -14,3 +14,17 @@ CREATE TABLE IF NOT EXISTS User(
     password VARCHAR(50) NOT NULL,
     accountType CHAR(1) 
 );
+
+CREATE TABLE IF NOT EXISTS Bookstore(
+    inventory text[][] NOT NULL,
+    ISBN INT NOT NULL,
+    genres text[] NOT NULL,
+    categories text[] NOT NULL, 
+    authors text[] NOT NULL PRIMARY KEY,
+    orders text[] NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Order(
+    id INT NOT NULL PRIMARY KEY,
+    books text[] NOT NULL
+);
