@@ -14,6 +14,7 @@ public class main{
     static LinkedList<Book> cart = new LinkedList<>();
     static boolean loggedIn = false;
     
+    
     static String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";
     static String username = "postgres";
     static String password = "nick99285"; //replace "password" with your own master password.
@@ -336,16 +337,20 @@ public class main{
                     break;
                 case 2:
                     printCart();
-                    if(loggedIn){
-                        System.out.println("Would you like to checkout (y or n)");
-                        char flag = in.next().charAt(0);
-                        if(flag == 'y' && mode == 'u'){
-                            checkout();
-                        }
-                    }else{
-                        System.out.println("You need to login before checking out");
+                    if(cart.size() == 0){
+                        System.out.println("Your cart is empty");
                     }
-                    
+                    else{
+                        if(loggedIn){
+                            System.out.println("Would you like to checkout (y or n)");
+                            char flag = in.next().charAt(0);
+                            if(flag == 'y' && mode == 'u'){
+                                checkout();
+                            }
+                        }else{
+                            System.out.println("You need to login before checking out");
+                        }
+                    }        
                     break;
                 case 3:
                     searchBook();
