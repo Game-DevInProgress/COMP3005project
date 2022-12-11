@@ -52,7 +52,7 @@ public class main{
                     String genre = result.getString("genre");
                     String author = result.getString("author");
     
-                    System.out.println(title + ", " + ISBN + ", " + prices+ ", " + "Cost of two books: " + prices * 2 + ", " + pages + ", " + genre + ", " + author + "\n");
+                    System.out.println(title + ", " + ISBN + ", " + prices + ", " + "Cost of two books: " + prices * 2 + ", " + pages + ", " + genre + ", " + author + "\n");
                     
                 }
     
