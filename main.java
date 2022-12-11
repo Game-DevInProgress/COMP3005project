@@ -252,6 +252,7 @@ public class main{
             default:
                 System.out.println("Unknown command. Please try again");
         }
+        //System.out.println();
         displayMenu();
         handleMenuInput();
     }
