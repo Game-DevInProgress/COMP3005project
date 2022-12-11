@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS Books(
     pages INT NOT NULL,
     price FLOAT NOT NULL,
     genre VARCHAR(30) NOT NULL,
-    author VARCHAR(50) NOT NULL
+    author VARCHAR(50) NOT NULL,
+	quantity INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Users(

@@ -35,36 +35,39 @@ public class main{
     public static void handleInput(int c){
         switch(c){
             case 1:
-            
-            try{
-        
-                Connection connection = DriverManager.getConnection(jdbcURL, username, password);
-                String sql = "Select * from Books";
-                Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery(sql);
-                System.out.println("Book title, ISBN, Number of pages, Genre, Book Author \n");
-
-                while(result.next()){
-                    String title = result.getString("title");
-                    int ISBN = result.getInt("ISBN");
-                    float prices = result.getFloat("price");
-                    int pages = result.getInt("pages");
-                    String genre = result.getString("genre");
-                    String author = result.getString("author");
-    
-                    System.out.println(title + ", " + ISBN + ", " + prices + ", " + "Cost of two books: " + prices * 2 + ", " + pages + ", " + genre + ", " + author + "\n");
-                    
-                }
-    
-                connection.close();
-        
-            } catch (SQLException e) {
-                System.out.println("Error connecting");
-                e.printStackTrace();
-            }
+                getBooks();
                 break;
             default:
                 System.out.println("Unknown command. Please try again");
+        }
+    }
+
+    public static void getBooks() {
+        try{
+            Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+            String sql = "Select * from Books";
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            System.out.println("Book title, ISBN, Number of pages, Genre, Book Author \n");
+
+            while(result.next()){
+                String title = result.getString("title");
+                int ISBN = result.getInt("ISBN");
+                float prices = result.getFloat("price");
+                int pages = result.getInt("pages");
+                String genre = result.getString("genre");
+                String author = result.getString("author");
+                int quantity = result.getInt("quantity");
+
+                System.out.println(title + ", " + ISBN + ", " + prices + ", " + "Cost of two books: " + prices * 2 + ", " + pages + ", " + genre + ", " + author + ", " + quantity + "\n");
+                
+            }
+
+            connection.close();
+    
+        } catch (SQLException e) {
+            System.out.println("Error connecting");
+            e.printStackTrace();
         }
     }
 }

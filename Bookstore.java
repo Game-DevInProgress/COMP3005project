@@ -7,7 +7,7 @@ public class Bookstore{
 	String[] categories;
 	String[] authors;
 	int[] orders;
-
 	
 }
+
 
