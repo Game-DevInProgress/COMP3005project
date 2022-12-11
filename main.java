@@ -10,6 +10,7 @@ public class main{
     static String jdbcURL = "jdbc:postgresql://localhost:5432/BookStore";
     static String username = "postgres";
     static String password = "minecraft1221"; //replace "password" with your own master password.
+    static Scanner in = new Scanner(System.in);
     public static void main(String[] args) {
         User user = new User();
         System.out.println("Welcome To LookInnaBook");
@@ -38,8 +39,10 @@ public class main{
                 getBooks();
                 break;
             case 2:
+                
                 break;
             case 3:
+                searchBook();
                 break;
             default:
                 System.out.println("Unknown command. Please try again");
@@ -76,7 +79,6 @@ public class main{
     }
 
     public static void searchBook(){
-        Scanner in = new Scanner(System.in);
         try{
             System.out.println("How would you like to search:");
             System.out.println("1.\tTitle");
@@ -87,39 +89,16 @@ public class main{
             System.out.print("Choice: ");
             int choice = in.nextInt();
 
-            try{
-                Connection connection = DriverManager.getConnection(jdbcURL, username, password);
-                String sql = "Select * from Books";
-                Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery(sql);
-                System.out.println("Book title, ISBN, Number of pages, Genre, Book Author \n");
-    
-                while(result.next()){
-                    String title = result.getString("title");
-                    int ISBN = result.getInt("ISBN");
-                    float prices = result.getFloat("price");
-                    int pages = result.getInt("pages");
-                    String genre = result.getString("genre");
-                    String author = result.getString("author");
-                    int quantity = result.getInt("quantity");
-    
-                    System.out.println(title + ", " + ISBN + ", " + prices + ", " + "Cost of two books: " + prices * 2 + ", " + pages + ", " + genre + ", " + author + ", " + quantity + "\n");
-                    
-                }
-    
-                connection.close();
-        
-            } catch (SQLException e) {
-                System.out.println("Error connecting");
-                e.printStackTrace();
-            }
-
             switch(choice){
                 
                 case 1:
+                    System.out.println("What is the title: ");
+                    String t = in.next();
+                    
                     try{
                         Connection connection = DriverManager.getConnection(jdbcURL, username, password);
-                        String sql = "Select * from Books";
+                        String sql = "Select * from Books where title='";
+                        sql+= t + "'";
                         Statement statement = connection.createStatement();
                         ResultSet result = statement.executeQuery(sql);
                         System.out.println("Book title, ISBN, Number of pages, Genre, Book Author \n");
