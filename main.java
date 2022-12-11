@@ -209,7 +209,6 @@ public class main{
         int c;
         while(true){
             try{
-                Scanner in = new Scanner(System.in);
                 System.out.print("Choice: ");
                 c = in.nextInt();
     
