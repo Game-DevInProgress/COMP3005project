@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 public class main{
     static boolean loggedIn = false;
-    static String jdbcURL = "jdbc:postgresql://localhost:5432/BookStore";
+    static String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";
     static String username = "postgres";
-    static String password = "minecraft1221"; //replace "password" with your own master password.
+    static String password = "nick99285"; //replace "password" with your own master password.
     static Scanner in = new Scanner(System.in);
     static String user = "Guest";
     static char mode = 'g';
