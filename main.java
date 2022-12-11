@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -204,21 +205,32 @@ public class main{
     }
 
     public static void displayMenu(){
-        System.out.println("logged in as:\t" + user);
-        System.out.println();
-
-        System.out.println("What would you like to do:");
-        System.out.println("1. View books");
-        System.out.println("2. View cart");
-        System.out.println("3. Search for Book");
-        if(!loggedIn){
-            System.out.println("4. Sign in");
-        } 
-        else{
+        if(mode == 'o'){
+            System.out.println("logged in as:\t" + user);
+            System.out.println();
+            System.out.println("What would you like to do:");
+            System.out.println("1. View Report");
+            System.out.println("2. Add Books");
+            System.out.println("3. Remove Books");
             System.out.println("4. Log Out");
+            System.out.println("5. Leave Store\n");
         }
-        System.out.println("5. Leave Store\n");
+        else{
+            System.out.println("logged in as:\t" + user);
+            System.out.println();
+            System.out.println("What would you like to do:");
+            System.out.println("1. View books");
+            System.out.println("2. View cart");
+            System.out.println("3. Search for Book");
+            if(!loggedIn){
+            System.out.println("4. Sign in");
+            } 
+            else{
+                System.out.println("4. Log Out");
+            }
+            System.out.println("5. Leave Store\n");
         
+        }
     }
 
     public static void displayBook(String t, int code, int numPage, float cost, String g, String auth, int quantity){
@@ -274,10 +286,12 @@ public class main{
                     getBooks();
                     break;
                 case 2:
-                    
+                    addBooks();
+                    getBooks();
                     break;
                 case 3:
-                    searchBook();
+                    removeBooks();
+                    getBooks();
                     break;
                 case 4:
                     if(loggedIn){
@@ -424,6 +438,69 @@ public class main{
         }
     }
 
+    public static void addBooks(){
+        System.out.print("Title: ");
+        in.nextLine();
+        String title = in.nextLine();
+        System.out.print("ISBN: ");
+        int isbn = in.nextInt();
+        System.out.print("Pages: ");
+        int pages = in.nextInt();
+        System.out.print("Price: ");
+        int price = in.nextInt();
+        System.out.print("Genre: ");
+        String genre = in.nextLine();
+        in.nextLine();
+        System.out.print("Author Name: ");
+        String aName = in.nextLine();
+        System.out.print("Quantity: ");
+        int quantity = in.nextInt();
+
+        String sql = "INSERT INTO Books(title, ISBN, pages, price, genre, author, quantity) " + "Values(?, ?, ?, ?, ?, ?, ?)";
+
+        try{
+            Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+            
+            PreparedStatement pst = connection.prepareStatement(sql);
+            
+            pst.setString(1, title);
+            pst.setInt(2, isbn);
+            pst.setInt(3, pages);
+            pst.setInt(4, price);
+            pst.setString(5, genre);
+            pst.setString(6, aName);
+            pst.setInt(7, quantity);
+            pst.executeUpdate();
+            connection.close();
+    
+        } catch (SQLException e) {
+            System.out.println("Error connecting");
+            e.printStackTrace();
+        }
+    }
+
+    public static void removeBooks(){
+        System.out.println("What is the ISBN of the book you would like to remove: ");
+        in.nextLine();
+        int isbn = in.nextInt();
+        String sql = "DELETE FROM Books where isbn = ? ";
+        try{
+            Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+
+            PreparedStatement pst = connection.prepareStatement(sql);
+            
+            pst.setInt(1, isbn);
+            pst.executeUpdate();
+            
+            
+
+            connection.close();
+    
+        } catch (SQLException e) {
+            System.out.println("Error connecting");
+            e.printStackTrace();
+        }
+    }
 }
 
 ///WORK IN PROGRESS FOR PRINTING SERACHED BOOKS////

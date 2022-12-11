@@ -20,3 +20,11 @@ CREATE TABLE IF NOT EXISTS Orders(
     id INT NOT NULL PRIMARY KEY,
     books text[] NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS Authors(
+    fullname VARCHAR(50) NOT NULL,
+    authorAddress VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL PRIMARY KEY, 
+    phoneNum VARCHAR(50) NOT NULL,
+    bankInfo VARCHAR(50) NOT NULL
+);
