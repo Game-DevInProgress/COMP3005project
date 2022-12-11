@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class main{
-    static String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";
+    static String jdbcURL = "jdbc:postgresql://localhost:5432/BookStore";
     static String username = "postgres";
-    static String password = "nick99285"; //replace "password" with your own master password.
+    static String password = "minecraft1221"; //replace "password" with your own master password.
     public static void main(String[] args) {
         User user = new User();
         System.out.println("Welcome To LookInnaBook");
@@ -36,6 +36,10 @@ public class main{
         switch(c){
             case 1:
                 getBooks();
+                break;
+            case 2:
+                break;
+            case 3:
                 break;
             default:
                 System.out.println("Unknown command. Please try again");
@@ -68,6 +72,84 @@ public class main{
         } catch (SQLException e) {
             System.out.println("Error connecting");
             e.printStackTrace();
+        }
+    }
+
+    public static void searchBook(){
+        Scanner in = new Scanner(System.in);
+        try{
+            System.out.println("How would you like to search:");
+            System.out.println("1.\tTitle");
+            System.out.println("2.\tISBN");
+            System.out.println("3.\tAuthor");
+            System.out.println("4.\tGenre");
+            System.out.println("5.\t");
+            System.out.print("Choice: ");
+            int choice = in.nextInt();
+
+            try{
+                Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+                String sql = "Select * from Books";
+                Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery(sql);
+                System.out.println("Book title, ISBN, Number of pages, Genre, Book Author \n");
+    
+                while(result.next()){
+                    String title = result.getString("title");
+                    int ISBN = result.getInt("ISBN");
+                    float prices = result.getFloat("price");
+                    int pages = result.getInt("pages");
+                    String genre = result.getString("genre");
+                    String author = result.getString("author");
+                    int quantity = result.getInt("quantity");
+    
+                    System.out.println(title + ", " + ISBN + ", " + prices + ", " + "Cost of two books: " + prices * 2 + ", " + pages + ", " + genre + ", " + author + ", " + quantity + "\n");
+                    
+                }
+    
+                connection.close();
+        
+            } catch (SQLException e) {
+                System.out.println("Error connecting");
+                e.printStackTrace();
+            }
+
+            switch(choice){
+                
+                case 1:
+                    try{
+                        Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+                        String sql = "Select * from Books";
+                        Statement statement = connection.createStatement();
+                        ResultSet result = statement.executeQuery(sql);
+                        System.out.println("Book title, ISBN, Number of pages, Genre, Book Author \n");
+            
+                        while(result.next()){
+                            String title = result.getString("title");
+                            int ISBN = result.getInt("ISBN");
+                            float prices = result.getFloat("price");
+                            int pages = result.getInt("pages");
+                            String genre = result.getString("genre");
+                            String author = result.getString("author");
+                            int quantity = result.getInt("quantity");
+            
+                            System.out.println(title + ", " + ISBN + ", " + prices + ", " + "Cost of two books: " + prices * 2 + ", " + pages + ", " + genre + ", " + author + ", " + quantity + "\n");
+                            
+                        }
+            
+                        connection.close();
+                
+                    } catch (SQLException e) {
+                        System.out.println("Error connecting");
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
+                    System.out.println("Unknown choice. Please try again");
+            }
+        
+        }catch(Exception e){
+            System.out.println("Unknown command. Please try again");
         }
     }
 }
