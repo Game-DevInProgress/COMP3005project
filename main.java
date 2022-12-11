@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class main{
     static String jdbcURL = "jdbc:postgresql://localhost:5432/BookStore";
     static String username = "postgres";
-    static String password = "minecraft1221"; //replace "password" with your own master password.
+    static String password = "nick99285"; //replace "password" with your own master password.
     public static void main(String[] args) {
         User user = new User();
         System.out.println("Welcome To LookInnaBook");
