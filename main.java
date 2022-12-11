@@ -43,15 +43,16 @@ public class main{
                 Statement statement = connection.createStatement();
                 ResultSet result = statement.executeQuery(sql);
                 System.out.println("Book title, ISBN, Number of pages, Genre, Book Author \n");
-                
+
                 while(result.next()){
                     String title = result.getString("title");
                     int ISBN = result.getInt("ISBN");
+                    float prices = result.getFloat("price");
                     int pages = result.getInt("pages");
                     String genre = result.getString("genre");
                     String author = result.getString("author");
     
-                    System.out.println(title + ", " + ISBN + ", " + pages + ", " + genre + ", " + author + "\n");
+                    System.out.println(title + ", " + ISBN + ", " + prices+ ", " + "Cost of two books: " + prices * 2 + ", " + pages + ", " + genre + ", " + author + "\n");
                     
                 }
     
