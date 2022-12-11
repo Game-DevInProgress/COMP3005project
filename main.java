@@ -1,31 +1,14 @@
 //import the sql here
 import java.util.Scanner;  // Import the Scanner class
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-
-public class PostgreSQLJDBC {
-    public static void main(String args[]) {
-       String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";
-       String username = "postgresql";
-       String password = "password";
-       try{
-
-        Connection connection = DriverManager.getConnection(jdbcurl, username, password);
-        System.out.println("Succesfully connected to postgresql server");
-        connection.close();
-
-       } catch (SQLExeption e) {
-        System.out.println("Error connecting");
-        e.printStackTrace();
-       }
-       
-    }
-}
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class main{
     public static void main(String[] args) {
         User user = new User();
-        BookStore store = new BookStore();
         System.out.println("Welcome To LookInnaBook");
         System.out.println("logged in as:\t" + user.name);
         try{
@@ -49,8 +32,36 @@ public class main{
     public static void handleInput(int c){
         switch(c){
             case 1:
+            String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";
+            String username = "postgres";
+            String password = "nick99285"; //replace "password" with your own master password.
+            
+            try{
+        
+                Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+                String sql = "Select * from Books";
+                Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery(sql);
+                System.out.println("Book title, ISBN, Number of pages, Genre, Book Author \n");
                 
-                break
+                while(result.next()){
+                    String title = result.getString("title");
+                    int ISBN = result.getInt("ISBN");
+                    int pages = result.getInt("pages");
+                    String genre = result.getString("genre");
+                    String author = result.getString("author");
+    
+                    System.out.println(title + ", " + ISBN + ", " + pages + ", " + genre + ", " + author + "\n");
+                    
+                }
+    
+                connection.close();
+        
+            } catch (SQLException e) {
+                System.out.println("Error connecting");
+                e.printStackTrace();
+            }
+                break;
             default:
                 System.out.println("Unknown command. Please try again");
         }
