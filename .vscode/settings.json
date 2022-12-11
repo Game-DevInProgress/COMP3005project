@@ -2,6 +2,7 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "/Users/nick/Downloads/postgresql-42.5.1.jar",
-        "postgresql-42.5.1.jar"
+        "postgresql-42.5.1.jar",
+        "c:\\Users\\juelz\\Desktop\\postgresql-42.5.1.jar"
     ]
 }
