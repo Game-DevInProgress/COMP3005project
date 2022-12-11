@@ -1,5 +1,6 @@
 //import the sql here
 import java.util.Scanner;  // Import the Scanner class
+import java.util.LinkedList;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class main{
+    LinkedList<Book> cart;
     static boolean loggedIn = false;
+    
     static String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";
     static String username = "postgres";
     static String password = "nick99285"; //replace "password" with your own master password.
@@ -177,6 +180,7 @@ public class main{
     public static void displayMenu(){
         System.out.println("logged in as:\t" + user);
         System.out.println();
+
         System.out.println("What would you like to do:");
         System.out.println("1. View books");
         System.out.println("2. View cart");
@@ -304,7 +308,7 @@ public class main{
 
 }
 
-///WOROK IN PROGRESS FOR PRINTING SERACHED BOOKS////
+///WORK IN PROGRESS FOR PRINTING SERACHED BOOKS////
 // ResultSet main = result;
 // try{
 //     if(!main.next()){
