@@ -55,7 +55,6 @@ public class main{
             System.out.println("2.\tISBN");
             System.out.println("3.\tAuthor");
             System.out.println("4.\tGenre");
-            System.out.println("5.\t");
             System.out.print("Choice: ");
             int choice = in.nextInt();
 
@@ -333,7 +332,7 @@ public class main{
             
             switch(c){
                 case 1:
-                    getBooks();
+                    orderMoreBooks();
                     break;
                 case 2:
                     printCart();
@@ -503,6 +502,25 @@ public class main{
             e.printStackTrace();
         }
     }
+    public static void orderMoreBooks(){
+        int addQuantity = 6;
+        int minQuantity = 0;
+        String sql = "Update Books " + "SET quantity = ? " + "WHERE quantity <= ?";
+        try{
+            Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+
+            PreparedStatement pst = connection.prepareStatement(sql);
+            
+            pst.setInt(1, addQuantity);
+            pst.setInt(2, minQuantity);
+            pst.executeUpdate();
+
+            getBooks();
+        } catch (SQLException e) {
+            System.out.println("Error connecting");
+            e.printStackTrace();
+        }
+    }  
 }
 
 ///WORK IN PROGRESS FOR PRINTING SERACHED BOOKS////
