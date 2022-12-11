@@ -1,5 +1,26 @@
 //import the sql here
 import java.util.Scanner;  // Import the Scanner class
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class PostgreSQLJDBC {
+    public static void main(String args[]) {
+       String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";
+       String username = "postgresql";
+       String password = "password";
+       try{
+
+        Connection connection = DriverManager.getConnection(jdbcurl, username, password);
+        System.out.println("Succesfully connected to postgresql server");
+        connection.close();
+
+       } catch (SQLExeption e) {
+        System.out.println("Error connecting");
+        e.printStackTrace();
+       }
+       
+    }
+}
 
 public class main{
     public static void main(String[] args) {
