@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class main{
+    static String jdbcURL = "jdbc:postgresql://localhost:5432/BookStore";
+    static String username = "postgres";
+    static String password = "minecraft1221"; //replace "password" with your own master password.
     public static void main(String[] args) {
         User user = new User();
         System.out.println("Welcome To LookInnaBook");
@@ -32,9 +35,6 @@ public class main{
     public static void handleInput(int c){
         switch(c){
             case 1:
-            String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";
-            String username = "postgres";
-            String password = "nick99285"; //replace "password" with your own master password.
             
             try{
         
