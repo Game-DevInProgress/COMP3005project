@@ -14,9 +14,9 @@ public class main{
     static LinkedList<Book> cart = new LinkedList<>();
     static boolean loggedIn = false;
     
-    static String jdbcURL = "jdbc:postgresql://localhost:5432/BookStore";
+    static String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";
     static String username = "postgres";
-    static String password = "minecraft1221"; //replace "password" with your own master password.
+    static String password = "nick99285"; //replace "password" with your own master password.
     static Scanner in = new Scanner(System.in);
     static String user = "Guest";
     static char mode = 'g';
@@ -180,24 +180,26 @@ public class main{
                 books.add(b);
                 
             }
-
-            if(i==0){
-                System.out.println("NO BOOKS WERE FOUND MATCHING THE QUERY");
-            }else if(i ==1){
-                System.out.print("Would you like to add this book to your cart (y or n): ");
-                char add = in.next().charAt(0);
-                if(add == 'y'){
-                    cart.add(books.get(i));
-                }
-            }else{
-                System.out.print("Would you like to add a book from the list into your cart (y or n): ");
-                char add = in.next().charAt(0);
-                if(add == 'y'){
-                    System.out.println("Which book number would you like to add (Result #): ");
-                    int index = in.nextInt();
-                    cart.add(books.get(index-1));
+            if(mode != 'o'){
+                if(i==0){
+                    System.out.println("NO BOOKS WERE FOUND MATCHING THE QUERY");
+                }else if(i ==1){
+                    System.out.print("Would you like to add this book to your cart (y or n): ");
+                    char add = in.next().charAt(0);
+                    if(add == 'y'){
+                        cart.add(books.get(i));
+                    }
+                }else{
+                    System.out.print("Would you like to add a book from the list into your cart (y or n): ");
+                    char add = in.next().charAt(0);
+                    if(add == 'y'){
+                        System.out.println("Which book number would you like to add (Result #): ");
+                        int index = in.nextInt();
+                        cart.add(books.get(index-1));
+                    }
                 }
             }
+            
         }catch(SQLException e){
             System.out.println(e);
             e.printStackTrace();
@@ -449,8 +451,8 @@ public class main{
         System.out.print("Price: ");
         int price = in.nextInt();
         System.out.print("Genre: ");
-        String genre = in.nextLine();
         in.nextLine();
+        String genre = in.nextLine();
         System.out.print("Author Name: ");
         String aName = in.nextLine();
         System.out.print("Quantity: ");
