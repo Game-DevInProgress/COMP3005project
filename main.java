@@ -247,10 +247,12 @@ public class main{
                     getBooks();
                     break;
                 case 2:
-                    
+                    addBooks();
+                    getBooks();
                     break;
                 case 3:
-                    searchBook();
+                    removeBooks();
+                    getBooks();
                     break;
                 case 4:
                     if(loggedIn){
@@ -367,19 +369,21 @@ public class main{
     }
 
     public static void addBooks(){
-        System.out.println("Title: ");
+        System.out.print("Title: ");
+        in.nextLine();
         String title = in.nextLine();
-        System.out.println("ISBN: ");
+        System.out.print("ISBN: ");
         int isbn = in.nextInt();
-        System.out.println("Pages: ");
+        System.out.print("Pages: ");
         int pages = in.nextInt();
-        System.out.println("Price: ");
+        System.out.print("Price: ");
         int price = in.nextInt();
-        System.out.println("Genre: ");
+        System.out.print("Genre: ");
         String genre = in.nextLine();
-        System.out.println("Author Name: ");
+        in.nextLine();
+        System.out.print("Author Name: ");
         String aName = in.nextLine();
-        System.out.println("Quantity: ");
+        System.out.print("Quantity: ");
         int quantity = in.nextInt();
 
         String sql = "INSERT INTO Books(title, ISBN, pages, price, genre, author, quantity) " + "Values(?, ?, ?, ?, ?, ?, ?)";
@@ -405,6 +409,28 @@ public class main{
         }
     }
 
+    public static void removeBooks(){
+        System.out.println("What is the ISBN of the book you would like to remove: ");
+        in.nextLine();
+        int isbn = in.nextInt();
+        String sql = "DELETE FROM Books where isbn = ? ";
+        try{
+            Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+
+            PreparedStatement pst = connection.prepareStatement(sql);
+            
+            pst.setInt(1, isbn);
+            pst.executeUpdate();
+            
+            
+
+            connection.close();
+    
+        } catch (SQLException e) {
+            System.out.println("Error connecting");
+            e.printStackTrace();
+        }
+    }
 }
 
 ///WORK IN PROGRESS FOR PRINTING SERACHED BOOKS////
