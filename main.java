@@ -66,8 +66,6 @@ public class main{
                         sql+= t + "'";
                         Statement statement = connection.createStatement();
                         ResultSet result = statement.executeQuery(sql);
-                        System.out.println();
-                        System.out.println("BOOKS MATCHING YOUR SEARCH: ");
             
                         parseResult(result);
             
@@ -88,8 +86,6 @@ public class main{
                         sql+= code + "'";
                         Statement statement = connection.createStatement();
                         ResultSet result = statement.executeQuery(sql);
-                        System.out.println();
-                        System.out.println("BOOKS MATCHING YOUR SEARCH: ");
             
                         parseResult(result);
             
@@ -111,8 +107,7 @@ public class main{
                         sql+= a + "'";
                         Statement statement = connection.createStatement();
                         ResultSet result = statement.executeQuery(sql);
-                        System.out.println();
-                        System.out.println("BOOKS MATCHING YOUR SEARCH: ");
+                        
                         parseResult(result);
             
                         connection.close();
@@ -133,8 +128,6 @@ public class main{
                         sql+= g + "'";
                         Statement statement = connection.createStatement();
                         ResultSet result = statement.executeQuery(sql);
-                        System.out.println();
-                        System.out.println("BOOKS MATCHING YOUR SEARCH: ");
             
                         parseResult(result);
             
@@ -171,7 +164,7 @@ public class main{
                 String genre = result.getString("genre");
                 String author = result.getString("author");
                 int quantity = result.getInt("quantity");
-
+    
                 displayBook(title, ISBN, pages, price, genre, author, quantity);
                 
             }
@@ -179,7 +172,6 @@ public class main{
             System.out.println(e);
             e.printStackTrace();
         }
-        
     }
 
     public static void displayMenu(){
@@ -190,11 +182,13 @@ public class main{
         System.out.println("2. View cart");
         System.out.println("3. Search for Book");
         if(!loggedIn){
-            System.out.println("4.Sign in");
+            System.out.println("4. Sign in");
         } 
         else{
-            System.out.println("4.Log Out");
-        } 
+            System.out.println("4. Log Out");
+        }
+        System.out.println("5. Leave Store\n");
+        
     }
 
     public static void displayBook(String t, int code, int numPage, float cost, String g, String auth, int quantity){
@@ -216,9 +210,10 @@ public class main{
         while(true){
             try{
                 Scanner in = new Scanner(System.in);
+                System.out.print("Choice: ");
                 c = in.nextInt();
     
-                if(c < 1 || c > 4){
+                if(c < 1 || c > 5){
                     throw new ArithmeticException("Entry out of bounds. Please try again.");
                 }
                 else{
@@ -251,6 +246,9 @@ public class main{
                 else{
                     logIn();
                 }
+                break;
+            case 5:
+                System.exit(0);
                 break;
             default:
                 System.out.println("Unknown command. Please try again");
@@ -306,4 +304,30 @@ public class main{
 
 }
 
+///WOROK IN PROGRESS FOR PRINTING SERACHED BOOKS////
+// ResultSet main = result;
+// try{
+//     if(!main.next()){
+//         System.out.println("NO BOOKS WERE FOUND MATCHING YOUR QUERY");
+//     }else{
+//         System.out.println();
+//         System.out.println("BOOKS MATCHING YOUR SEARCH: ");
 
+//         while(result.next()){
+//             String title = result.getString("title");
+//             int ISBN = result.getInt("ISBN");
+//             float price = result.getFloat("price");
+//             int pages = result.getInt("pages");
+//             String genre = result.getString("genre");
+//             String author = result.getString("author");
+//             int quantity = result.getInt("quantity");
+
+//             displayBook(title, ISBN, pages, price, genre, author, quantity);
+            
+//         }
+//     }
+    
+// }catch(SQLException e){
+//     System.out.println(e);
+//     e.printStackTrace();
+// }
