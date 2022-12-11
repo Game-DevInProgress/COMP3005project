@@ -211,50 +211,98 @@ public class main{
     
     public static void handleMenuInput(){
         int c;
-        while(true){
-            try{
-                System.out.print("Choice: ");
-                c = in.nextInt();
-    
-                if(c < 1 || c > 5){
-                    throw new ArithmeticException("Entry out of bounds. Please try again.");
+        if(mode == 'o'){
+            while(true){
+                try{
+                    System.out.print("Choice: ");
+                    c = in.nextInt();
+        
+                    if(c < 1 || c > 5){
+                        throw new ArithmeticException("Entry out of bounds. Please try again.");
+                    }
+                    else{
+                        break;
+                    }
                 }
-                else{
+                catch(Exception e){
+                    System.out.println(e);
+                }
+            }
+            
+            
+            switch(c){
+                case 1:
+                    getBooks();
                     break;
+                case 2:
+                    
+                    break;
+                case 3:
+                    searchBook();
+                    break;
+                case 4:
+                    if(loggedIn){
+                        user = "Guest";
+                        mode = 'g';
+                        loggedIn = false;
+                        System.out.println("Successfully logged out");
+                    }
+                    else{
+                        logIn();
+                    }
+                    break;
+                case 5:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Unknown command. Please try again");
+            }
+        }else{
+            while(true){
+                try{
+                    System.out.print("Choice: ");
+                    c = in.nextInt();
+        
+                    if(c < 1 || c > 5){
+                        throw new ArithmeticException("Entry out of bounds. Please try again.");
+                    }
+                    else{
+                        break;
+                    }
+                }
+                catch(Exception e){
+                    System.out.println(e);
                 }
             }
-            catch(Exception e){
-                System.out.println(e);
+            
+            
+            switch(c){
+                case 1:
+                    getBooks();
+                    break;
+                case 2:
+                    
+                    break;
+                case 3:
+                    searchBook();
+                    break;
+                case 4:
+                    if(loggedIn){
+                        user = "Guest";
+                        mode = 'g';
+                        loggedIn = false;
+                        System.out.println("Successfully logged out");
+                    }
+                    else{
+                        logIn();
+                    }
+                    break;
+                case 5:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Unknown command. Please try again");
             }
-        }
-        
-        
-        switch(c){
-            case 1:
-                getBooks();
-                break;
-            case 2:
-                
-                break;
-            case 3:
-                searchBook();
-                break;
-            case 4:
-                if(loggedIn){
-                    user = "Guest";
-                    mode = 'g';
-                    loggedIn = false;
-                    System.out.println("Successfully logged out");
-                }
-                else{
-                    logIn();
-                }
-                break;
-            case 5:
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Unknown command. Please try again");
         }
         //System.out.println();
         displayMenu();
