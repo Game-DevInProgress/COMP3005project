@@ -14,9 +14,9 @@ public class main{
     static LinkedList<Book> cart = new LinkedList<>();
     static boolean loggedIn = false;
     
-    static String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";
+    static String jdbcURL = "jdbc:postgresql://localhost:5432/BookStore";
     static String username = "postgres";
-    static String password = "nick99285"; //replace "password" with your own master password.
+    static String password = "minecraft1221"; //replace "password" with your own master password.
     static Scanner in = new Scanner(System.in);
     static String user = "Guest";
     static char mode = 'g';
@@ -187,7 +187,20 @@ public class main{
                     System.out.print("Would you like to add this book to your cart (y or n): ");
                     char add = in.next().charAt(0);
                     if(add == 'y'){
-                        cart.add(books.get(i));
+                        Boolean valid = false;
+                        while(!valid){
+                            System.out.print("How many books do you want: ");
+                            int quant = in.nextInt();
+                            if(quant > books.get(0).quantity || quant < 0){
+                                System.out.println("Values is out of bounds");
+                            }
+                            else{
+                                valid = true;
+                                books.get(0).quantity = quant;
+                                cart.add(books.get(i));
+                            }
+                        }
+                        
                     }
                 }else{
                     System.out.print("Would you like to add a book from the list into your cart (y or n): ");
@@ -195,7 +208,20 @@ public class main{
                     if(add == 'y'){
                         System.out.println("Which book number would you like to add (Result #): ");
                         int index = in.nextInt();
-                        cart.add(books.get(index-1));
+
+                        Boolean valid = false;
+                        while(!valid){
+                            System.out.print("How many books do you want: ");
+                            int quant = in.nextInt();
+                            if(quant > books.get(0).quantity || quant < 0){
+                                System.out.println("Values is out of bounds");
+                            }
+                            else{
+                                valid = true;
+                                books.get(0).quantity = quant;
+                                cart.add(books.get(index-1));
+                            }
+                        }
                     }
                 }
             }
