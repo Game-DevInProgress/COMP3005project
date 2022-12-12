@@ -1,4 +1,4 @@
-//import the sql here
+//imports
 import java.util.Scanner;  // Import the Scanner class
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,15 +10,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class main{
-    static int orderNumber = 0;
+    static int orderNumber = 0;//gets incremented each time a order is placed
     static LinkedList<Book> cart = new LinkedList<>();
     static boolean loggedIn = false;
     
     
     
-    static String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";
+    static String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";//replace 3005project with the name of your database
     static String username = "postgres";
-    static String password = "nick99285"; //replace "password" with your own master password.
+    static String password = "nick99285"; //replace "password" with your own master password from pgAdmin4.
     static Scanner in = new Scanner(System.in);
     static String user = "Guest";
     static char mode = 'g';
@@ -33,6 +33,7 @@ public class main{
         
     }
 
+    //function to get a list of all the books from the Books table in the database
     public static void getBooks() {
         try{
             Connection connection = DriverManager.getConnection(jdbcURL, username, password);
@@ -40,7 +41,7 @@ public class main{
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sql);
 
-            parseResult(result);
+            parseResult(result);//helper function to parse result data
 
             connection.close();
     
@@ -50,6 +51,7 @@ public class main{
         }
     }
 
+    //Function to search for a book based on a specified parameter
     public static void searchBook(){
         try{
             System.out.println("How would you like to search:");
@@ -62,7 +64,7 @@ public class main{
 
             switch(choice){
                 
-                case 1://START CASE 1
+                case 1://search by title
                     System.out.println("What is the title: ");
                     in.nextLine();
                     String t = in.nextLine();
@@ -83,7 +85,7 @@ public class main{
                         e.printStackTrace();
                     }
                     break;
-                case 2:
+                case 2://search by ISBN
                     System.out.println("What is the ISBN: ");
                     int code = in.nextInt();
 
@@ -103,7 +105,7 @@ public class main{
                         e.printStackTrace();
                     }
                     break;
-                case 3:
+                case 3://search by author
                     System.out.println("What is the Author: ");
                     in.nextLine();
                     String a = in.nextLine();
@@ -124,7 +126,7 @@ public class main{
                         e.printStackTrace();
                     }
                     break;
-                case 4:
+                case 4://search by genre
                     System.out.println("What is the Genre: ");
                     in.nextLine();
                     String g = in.nextLine();
@@ -145,8 +147,6 @@ public class main{
                         e.printStackTrace();
                     }
                     break;
-                case 5:
-                    break;
                 default:
                     System.out.println("Unknown choice. Please try again");
             }
@@ -161,8 +161,9 @@ public class main{
     /////////////////////////////////HELPER FUNCTIONS////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //helper function to parse the resultset returned from sql database
     public static void parseResult(ResultSet result){
-        ArrayList<Book> books = new ArrayList<>();
+        ArrayList<Book> books = new ArrayList<>();//all books returned by query
         int i = 0;
         try{
             while(result.next()){
@@ -181,7 +182,7 @@ public class main{
                 books.add(b);
                 
             }
-            if(mode != 'o'){
+            if(mode != 'o'){//the current user is not owner
                 if(i==0){
                     System.out.println("NO BOOKS WERE FOUND MATCHING THE QUERY");
                 }else if(i ==1){
@@ -197,8 +198,13 @@ public class main{
                             }
                             else{
                                 valid = true;
-                                books.get(0).quantity = quant;
-                                cart.add(books.get(i));
+                                if(cart.contains(books.get(0))){
+                                    books.get(0).quantity += quant;
+                                }
+                                else{
+                                    books.get(0).quantity = quant;
+                                    cart.add(books.get(0));
+                                }                        
                             }
                         }
                         
@@ -214,13 +220,18 @@ public class main{
                         while(!valid){
                             System.out.print("How many books do you want: ");
                             int quant = in.nextInt();
-                            if(quant > books.get(0).quantity || quant < 0){
+                            if(quant > books.get(index - 1).quantity || quant < 0){
                                 System.out.println("Values is out of bounds");
                             }
                             else{
                                 valid = true;
-                                books.get(0).quantity = quant;
-                                cart.add(books.get(index-1));
+                                if(cart.contains(books.get(index - 1))){
+                                    books.get(index - 1).quantity += quant;
+                                }
+                                else{
+                                    books.get(index - 1).quantity = quant;
+                                    cart.add(books.get(index-1));
+                                }                        
                             }
                         }
                     }
@@ -233,18 +244,19 @@ public class main{
         }
     }
 
+    //helper function to diplay the home menu
     public static void displayMenu(){
-        if(mode == 'o'){
+        if(mode == 'o'){//display owner menu
             System.out.println("logged in as:\t" + user);
             System.out.println();
             System.out.println("What would you like to do:");
-            System.out.println("1. View Report");
+            System.out.println("1. View Report (Did not finish)");
             System.out.println("2. Add Books");
             System.out.println("3. Remove Books");
             System.out.println("4. Log Out");
             System.out.println("5. Leave Store\n");
         }
-        else{
+        else{//user menu
             System.out.println("logged in as:\t" + user);
             System.out.println();
             System.out.println("What would you like to do:");
@@ -262,19 +274,7 @@ public class main{
         }
     }
 
-    public static void displayBook(String t, int code, int numPage, float cost, String g, String auth, int quantity){
-        System.out.println("==========================================================================");
-        System.out.println("Title:\t\t" + t);
-        System.out.println("ISBN:\t\t" + code);
-        System.out.println("# of pages:\t" + numPage);
-        System.out.println("Cost:\t\t" + cost);
-        System.out.println("Genre:\t\t" + g);
-        System.out.println("Author:\t\t" + auth);
-        System.out.println("Quantity:\t" + quantity);
-        System.out.println("==========================================================================");
-        System.out.println();
-    }
-
+    //helper function to nicely display the books
     public static void displayBook(Book b){
         System.out.println("==========================================================================");
         System.out.println("Title:\t\t" + b.title);
@@ -288,7 +288,7 @@ public class main{
         System.out.println();
     }
 
-    
+    //helper function to handle the input from the main menu
     public static void handleMenuInput(){
         int c;
         if(mode == 'o'){
@@ -369,7 +369,7 @@ public class main{
                     }
                     else{
                         if(loggedIn){
-                            System.out.println("Would you like to checkout (y or n)");
+                            System.out.println("Would you like to checkout (y or n) (Not fully implemented)");
                             char flag = in.next().charAt(0);
                             if(flag == 'y' && mode == 'u'){
                                 checkout();
@@ -400,7 +400,7 @@ public class main{
                     System.out.println("Unknown command. Please try again");
             }
         }
-        //System.out.println();
+        
         displayMenu();
         handleMenuInput();
     }
@@ -415,9 +415,9 @@ public class main{
 
     public static void checkout(){
         System.out.println("Please enter billing info");
-        System.out.println("Card#: ");
+        System.out.print("Card#: ");
         int card = in.nextInt();
-        System.out.println("Shipping Address: ");
+        System.out.print("Shipping Address: ");
         in.next();
         String saddress = in.nextLine();
         //temp to clear cart
@@ -426,6 +426,8 @@ public class main{
         }
     }
 ////////END CART FUNCTIONS/////////////////
+
+//tests if user is in the database. If so then log them in
     public static void logIn(){
         
         boolean gotUser = false;
@@ -471,6 +473,7 @@ public class main{
         }
     }
 
+    //function for manager to be able to add books to the Books table
     public static void addBooks(){
         System.out.print("Title: ");
         in.nextLine();
@@ -512,6 +515,7 @@ public class main{
         }
     }
 
+    //function to remove a book from the Books table
     public static void removeBooks(){
         System.out.println("What is the ISBN of the book you would like to remove: ");
         in.nextLine();
@@ -534,6 +538,8 @@ public class main{
             e.printStackTrace();
         }
     }
+
+    //Function to order more books when quaantity is low
     public static void orderMoreBooks(){
         int addQuantity = 6;
         int minQuantity = 0;
@@ -554,31 +560,3 @@ public class main{
         }
     }  
 }
-
-///WORK IN PROGRESS FOR PRINTING SERACHED BOOKS////
-// ResultSet main = result;
-// try{
-//     if(!main.next()){
-//         System.out.println("NO BOOKS WERE FOUND MATCHING YOUR QUERY");
-//     }else{
-//         System.out.println();
-//         System.out.println("BOOKS MATCHING YOUR SEARCH: ");
-
-//         while(result.next()){
-//             String title = result.getString("title");
-//             int ISBN = result.getInt("ISBN");
-//             float price = result.getFloat("price");
-//             int pages = result.getInt("pages");
-//             String genre = result.getString("genre");
-//             String author = result.getString("author");
-//             int quantity = result.getInt("quantity");
-
-//             displayBook(title, ISBN, pages, price, genre, author, quantity);
-            
-//         }
-//     }
-    
-// }catch(SQLException e){
-//     System.out.println(e);
-//     e.printStackTrace();
-// }
