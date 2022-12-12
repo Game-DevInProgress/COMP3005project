@@ -18,7 +18,7 @@ public class main{
     
     static String jdbcURL = "jdbc:postgresql://localhost:5432/3005project";//replace 3005project with the name of your database
     static String username = "postgres";
-    static String password = "nick99285"; //replace "password" with your own master password from pgAdmin4.
+    static String password = "password"; //replace "password" with your own master password from pgAdmin4.
     static Scanner in = new Scanner(System.in);
     static String user = "Guest";
     static char mode = 'g';
