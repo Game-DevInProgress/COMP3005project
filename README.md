@@ -4,7 +4,6 @@
 Members: 
 * Juelz Rejano
 * Nicholas Tang
-* Eve Nhan
 
 ## Instructions
 1. Open up pgAdmin
